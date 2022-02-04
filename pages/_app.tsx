@@ -1,8 +1,24 @@
 import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import { AppProps } from 'next/app'
+import { useState } from 'react'
+
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
+
+// redux toolkitを使用するために、全体をくくる
+import { store } from '../app/store'
+import { Provider } from 'react-redux'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  const [queryClient] = useState(() => new QueryClient())
+  return (
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </Provider>
+  )
 }
 
 export default MyApp
