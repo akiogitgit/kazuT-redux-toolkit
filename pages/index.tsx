@@ -23,14 +23,17 @@ const Home: NextPage = () => {
       </ul>
 
       <Link href="/read-cache" passHref>
-        <div className="mt-20 flex items-center cursor-pointer">
+        <div className="mt-10 flex items-center cursor-pointer">
           <ChevronDoubleRightIcon className="h-5 w-5 mx-1 text-blue-500" />
         </div>
       </Link>
       <Link href="/redux-toolkit" passHref>
-        <div className="mt-20 flex items-center cursor-pointer">
+        <div className="mt-10 flex items-center cursor-pointer">
           Redux toolkit
         </div>
+      </Link>
+      <Link href="/Context" passHref>
+        <div className="my-4 flex items-center cursor-pointer">useContext</div>
       </Link>
     </Layout>
   )

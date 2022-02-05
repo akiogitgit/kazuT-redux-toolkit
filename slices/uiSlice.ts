@@ -26,6 +26,7 @@ export const uiSlice = createSlice({
   initialState,
   // reducerを定義
   reducers: {
+    // actionは第二引数(string)で、action.payloadで使えるようにする。
     setEditedTask: (state, action: PayloadAction<EditTask>) => {
       state.editedTask = action.payload
     },
