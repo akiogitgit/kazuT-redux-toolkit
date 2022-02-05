@@ -20,7 +20,7 @@ export const Layout: VFC<Props> = ({ children, title }) => {
       <footer className="w-full h-12 flex justify-center items-center border-t">
         <a className="flex items-center">
           Powered by akio
-          <Image src="/vercel.svg" width={72} height={16}></Image>
+          <Image src="/vercel.svg" width={72} height={16} alt="vercel"></Image>
         </a>
       </footer>
     </div>

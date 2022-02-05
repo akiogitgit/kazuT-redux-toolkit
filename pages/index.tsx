@@ -16,6 +16,7 @@ const Home: NextPage = () => {
       <p className="my-5 text-blue-500 text-xl font-bold">
         Fetching by useQuery
       </p>
+
       <ul>
         {data?.map((rocket) => (
           <RocketItem key={rocket.id} rocket={rocket} />
@@ -34,6 +35,16 @@ const Home: NextPage = () => {
       </Link>
       <Link href="/Context" passHref>
         <div className="my-4 flex items-center cursor-pointer">useContext</div>
+      </Link>
+      <Link href="/reactQueryNews" passHref>
+        <div className="my-4 flex items-center cursor-pointer">
+          reactQueryNews
+        </div>
+      </Link>
+      <Link href="/reactQueryTasks" passHref>
+        <div className="my-4 flex items-center cursor-pointer">
+          reactQueryTasks
+        </div>
       </Link>
     </Layout>
   )

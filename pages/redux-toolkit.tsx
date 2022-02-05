@@ -17,8 +17,8 @@ const ReduxToolkit: VFC = () => {
   const dispatch = useDispatch()
 
   // useSelectorで値を取得できる
-  // 直接探しに行く
-  const count = useSelector((state) => state.counter.count)
+  // 直接探しに行く 一応できるけど波線
+  // const count = useSelector((state) => state.counter.count)
   // あらかじめ、counterSliceで使えるようにしたもの
   const Count = useSelector(selectConter)
 
@@ -27,10 +27,12 @@ const ReduxToolkit: VFC = () => {
 
   const anpan = { id: 'id', title: 'anpan' }
 
+  // console.log(process.env.NEXT_PUBLIC_HASURA_ENDPOINT)
+
   return (
     <Layout title="redux toolkit">
       <div className="text-xl">
-        <h1>Count: {count}</h1>
+        {/* <h1>Count: {count}</h1> */}
         <h1>Count: {Count}</h1>
         <button onClick={() => dispatch(increase())}>↑add　</button>
         <button onClick={() => dispatch(decrease())}>↓down</button>
@@ -68,7 +70,7 @@ const ReduxToolkit: VFC = () => {
           <button type="submit">Submit</button>
         </form>
 
-        <Link href="/">
+        <Link href="/" passHref>
           <div className="mt-20 cursor-pointer">home</div>
         </Link>
       </div>

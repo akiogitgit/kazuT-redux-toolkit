@@ -44,7 +44,7 @@ const Context = () => {
           <ComponentA />
         </TopContext.Provider>
 
-        <Link href="/">
+        <Link href="/" passHref>
           <p className="mt-10 cursor-pointer">home</p>
         </Link>
       </div>
