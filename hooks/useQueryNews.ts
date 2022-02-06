@@ -6,9 +6,6 @@ import { GET_NEWS, GET_TASKS } from '../queries/queries' // query
 interface NewsRes {
   news: News[]
 }
-interface TasksRes {
-  tasks: Task[]
-}
 
 // gql-requestで fetchする         返ってくるデータの型
 export const fetchNews = async () => {

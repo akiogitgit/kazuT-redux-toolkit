@@ -21,7 +21,7 @@ const NewsItem: VFC<Props> = ({ news }) => {
     <li className="my-3">
       <span className="font-bold">{news.content}</span>
       <div className="flex float-right ml-20">
-        {/* 入力終了時に、reduxにセット */}
+        {/* この状態をreduxにセット、別のUPDATEをするファイルで扱う */}
         <PencilAltIcon
           className="h-5 w-5 mx-1 text-blue-500 cursor-pointer"
           onClick={() =>

@@ -13,7 +13,7 @@ import {
 import { Task, EditTask, News, EditNews } from '../types/types'
 import { resetEditedTask, resetEditedNews } from '../slices/uiSlice'
 import { useDispatch } from 'react-redux'
-import { fetchTasks } from './useQueryNews'
+import { fetchTasks } from './useQueryTasks'
 
 const cookie = new Cookie()
 const endpoint = process.env.NEXT_PUBLIC_HASURA_ENDPOINT
@@ -35,6 +35,8 @@ export const useAppMutation = () => {
     })
   }, [cookie.get('token')])
   // }, [])
+
+  const graphQLClient2: GraphQLClient = new GraphQLClient(endpoint)
 
   // taskを新規で作成する
   const createTaskMutaion = useMutation(

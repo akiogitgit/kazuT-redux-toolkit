@@ -1,15 +1,11 @@
 import { FormEvent, memo, VFC } from 'react'
-import { useQueryNews } from '../hooks/useQueryNews'
-import { NewsItemMemo } from './NewsItem'
 import { useAppMutation } from '../hooks/useAppMutate'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectNews, setEditedNews, resetEditedNews } from '../slices/uiSlice'
-import { NewsEditMemo } from './NewsEdit'
 
-const NewsList: VFC = () => {
+const NewsEdit: VFC = () => {
   const dispatch = useDispatch()
   const { createNewsMutation, updateNewsMutation } = useAppMutation()
-  const { status, data } = useQueryNews()
 
   const news = useSelector(selectNews)
 
@@ -25,9 +21,6 @@ const NewsList: VFC = () => {
   if (createNewsMutation.isLoading) return <p>Creating...</p>
   if (updateNewsMutation.isLoading) return <p>Updating...</p>
 
-  // これとreturnの間に書くな！ ここで、処理が止まるからこれ以下のが読み込まれなくなる
-  if (status === 'loading') return <p>Loading...</p>
-  if (status === 'error') return <p>🔺Error</p>
   return (
     <div>
       {/* <p>news.id: {news?.id}</p> */}
@@ -56,16 +49,8 @@ const NewsList: VFC = () => {
           {news?.id && news?.id !== 'create' ? 'Update' : 'Create'}
         </button>
       </form>
-
-      <NewsEditMemo />
-
-      {data?.map((news) => (
-        <ul key={news.id}>
-          <NewsItemMemo news={news} />
-        </ul>
-      ))}
     </div>
   )
 }
 
-export const NewsListMemo = memo(NewsList)
+export const NewsEditMemo = memo(NewsEdit)
