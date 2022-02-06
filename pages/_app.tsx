@@ -20,5 +20,5 @@ function MyApp({ Component, pageProps }: AppProps) {
     </Provider>
   )
 }
-
+// QueryClientの中にReactQueryDevtoolsがあれば、後の括りはCompoだけでいい
 export default MyApp

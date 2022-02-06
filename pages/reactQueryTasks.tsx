@@ -2,7 +2,8 @@ import React, { VFC } from 'react'
 import Link from 'next/link'
 
 import { Layout } from '../components/Layout'
-import { useQueryTasks } from '../hooks/useQueryNews'
+// import { useQueryTasks } from '../hooks/useQueryNews'
+import { useQueryTasks } from '../hooks/useQueryTasks'
 
 const ReactQueryTasks: VFC = () => {
   const { status, data } = useQueryTasks()

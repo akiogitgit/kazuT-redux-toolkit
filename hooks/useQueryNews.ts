@@ -29,19 +29,19 @@ export const useQueryNews = () => {
 }
 
 // Tasks
-export const fetchTasks = async () => {
-  const { tasks: data } = await request<TasksRes>(
-    // 'https://kazut-firebase.hasura.app/v1/graphql',
-    process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-    GET_TASKS
-  ) // 第一にhasuraのエンドポイント、第二にクエリ
-  return data
-}
-// カスタムフック
-export const useQueryTasks = () => {
-  return useQuery<Task[], Error>({
-    queryKey: 'tasks',
-    queryFn: fetchTasks,
-    staleTime: Infinity, // 追加のfetchを防ぐ
-  })
-}
+// export const fetchTasks = async () => {
+//   const { tasks: data } = await request<TasksRes>(
+//     // 'https://kazut-firebase.hasura.app/v1/graphql',
+//     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
+//     GET_TASKS
+//   ) // 第一にhasuraのエンドポイント、第二にクエリ
+//   return data
+// }
+// // カスタムフック
+// export const useQueryTasks = () => {
+//   return useQuery<Task[], Error>({
+//     queryKey: 'tasks',
+//     queryFn: fetchTasks,
+//     staleTime: Infinity, // 追加のfetchを防ぐ
+//   })
+// }
