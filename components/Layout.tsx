@@ -14,9 +14,11 @@ export const Layout: VFC<Props> = ({ children, title }) => {
         <title>{title}</title>
       </HEAD>
       <header></header>
+
       <main className="flex flex-1 flex-col justify-center items-center border-t">
         {children}
       </main>
+
       <footer className="w-full h-12 flex justify-center items-center border-t">
         <a className="flex items-center">
           Powered by akio

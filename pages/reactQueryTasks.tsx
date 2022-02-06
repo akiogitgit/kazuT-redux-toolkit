@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Layout } from '../components/Layout'
 // import { useQueryTasks } from '../hooks/useQueryNews'
 import { useQueryTasks } from '../hooks/useQueryTasks'
+import { TaskListMemo } from '../components/TaskList'
 
 const ReactQueryTasks: VFC = () => {
   const { status, data } = useQueryTasks()
@@ -13,6 +14,7 @@ const ReactQueryTasks: VFC = () => {
 
   return (
     <Layout title="react query">
+      <TaskListMemo />
       <ul className="mb-10">
         <li className="flex flex-col gap-5">
           {data?.map((task) => (

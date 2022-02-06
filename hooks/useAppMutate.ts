@@ -39,7 +39,7 @@ export const useAppMutation = () => {
   const graphQLClient2: GraphQLClient = new GraphQLClient(endpoint)
 
   // taskを新規で作成する
-  const createTaskMutaion = useMutation(
+  const createTaskMutation = useMutation(
     //                                      第一にクエリ　　　　第二に引数
     (title: string) => graphQLClient.request(CREATE_TASKS, { title: title }),
     {
@@ -85,7 +85,7 @@ export const useAppMutation = () => {
   )
 
   // delete task
-  const deleteTaskMutaion = useMutation(
+  const deleteTaskMutation = useMutation(
     (id: string) => graphQLClient.request(DELETE_TASKS, { id: id }),
     {
       onSuccess: (res, variables) => {
@@ -158,9 +158,9 @@ export const useAppMutation = () => {
 
   // カスタムフックだから、returnで使えるように
   return {
-    createTaskMutaion,
+    createTaskMutation,
     updateTaskMutation,
-    deleteTaskMutaion,
+    deleteTaskMutation,
     createNewsMutation,
     updateNewsMutation,
     deleteNewsMutation,

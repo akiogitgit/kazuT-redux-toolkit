@@ -1,13 +1,9 @@
 import React, { VFC } from 'react'
 import Link from 'next/link'
-
 import { Layout } from '../components/Layout'
-import { useQueryNews } from '../hooks/useQueryNews'
 import { NewsListMemo } from '../components/NewsList'
 
 const ReactQueryNews: VFC = () => {
-  const { status, data } = useQueryNews()
-
   return (
     <Layout title="react query">
       <h1 className="my-5 text-blue-500 text-xl font-bold">News</h1>
