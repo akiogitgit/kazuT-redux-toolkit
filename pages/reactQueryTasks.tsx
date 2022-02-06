@@ -2,7 +2,6 @@ import React, { VFC } from 'react'
 import Link from 'next/link'
 
 import { Layout } from '../components/Layout'
-// import { useQueryTasks } from '../hooks/useQueryNews'
 import { useQueryTasks } from '../hooks/useQueryTasks'
 import { TaskListMemo } from '../components/TaskList'
 
@@ -14,18 +13,9 @@ const ReactQueryTasks: VFC = () => {
 
   return (
     <Layout title="react query">
+      <h1 className="my-5 text-blue-500 text-xl font-bold">Tasks</h1>
+
       <TaskListMemo />
-      <ul className="mb-10">
-        <li className="flex flex-col gap-5">
-          {data?.map((task) => (
-            <div key={task?.id}>
-              <p>{task?.title}</p>
-              <p>{task?.id}</p>
-              <p>{task?.created_at}</p>
-            </div>
-          ))}
-        </li>
-      </ul>
 
       <Link href="/" passHref>
         home

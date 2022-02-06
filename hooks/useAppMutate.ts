@@ -13,7 +13,7 @@ import {
 import { Task, EditTask, News, EditNews } from '../types/types'
 import { resetEditedTask, resetEditedNews } from '../slices/uiSlice'
 import { useDispatch } from 'react-redux'
-import { fetchTasks } from './useQueryTasks'
+import { useSession } from 'next-auth/react'
 
 const cookie = new Cookie()
 const endpoint = <string>process.env.NEXT_PUBLIC_HASURA_ENDPOINT
@@ -24,6 +24,7 @@ export const useAppMutation = () => {
   const dispatch = useDispatch()
   // createとかした後に、既存のキャッシュも変更する必要がある。
   const queryClient = useQueryClient()
+  // const { data: session } = useSession()
 
   // tokenが変更する度、graphQLClient生成
   useEffect(() => {
@@ -47,7 +48,7 @@ export const useAppMutation = () => {
       onSuccess: (res) => {
         // クエリでDBに追加するのに加えて、キャッシュにも追加する
         // 既存のキャッシュを取得                         取得データ型  key
-        const previousTodos = queryClient.getQueriesData<Task[]>('tasks')
+        const previousTodos = queryClient.getQueryData<Task[]>('tasks')
         // キャッシュあるなら、追加
         if (previousTodos) {
           // 既存のキャッシュをスプレッドして、後部に追加
@@ -119,7 +120,6 @@ export const useAppMutation = () => {
       },
     }
   )
-
   // update News
   const updateNewsMutation = useMutation(
     (news: EditNews) => graphQLClient.request(UPDATE_NEWS, news),

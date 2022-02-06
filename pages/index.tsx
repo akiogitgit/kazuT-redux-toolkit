@@ -10,9 +10,8 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 const Home: NextPage = () => {
   // react-queryの標準でクエリの状態が分かる
   const { status, data } = useQueryRockets()
-  // console.log(process.env.NEXT_PUBLIC_GITHUB_ID)
   const { data: session } = useSession()
-
+  // console.log(process.env.NEXT_PUBLIC_GITHUB_ID)
   if (status === 'loading') return <Layout title="home">{'Loading...'}</Layout>
   if (status === 'error') return <Layout title="home">{'Error'}</Layout>
 
