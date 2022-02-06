@@ -34,6 +34,7 @@ export const useAppMutation = () => {
       },
     })
   }, [cookie.get('token')])
+  // }, [])
 
   // taskを新規で作成する
   const createTaskMutaion = useMutation(

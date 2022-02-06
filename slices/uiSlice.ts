@@ -9,6 +9,7 @@ export interface uiState {
 }
 
 // 必須。editedTask, editedNewsの初期値を定義
+// idいる？
 const initialState: uiState = {
   editedTask: {
     id: '',

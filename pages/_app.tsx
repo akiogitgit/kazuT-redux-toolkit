@@ -10,15 +10,27 @@ import { store } from '../app/store'
 import { Provider } from 'react-redux'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [queryClient] = useState(() => new QueryClient())
+  // const [queryClient] = useState(() => new QueryClient())
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: false,
+            refetchOnWindowFocus: false,
+          },
+        },
+      })
+  )
+
   return (
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
         <Component {...pageProps} />
-        <ReactQueryDevtools />
-      </QueryClientProvider>
-    </Provider>
+      </Provider>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   )
 }
-// QueryClientの中にReactQueryDevtoolsがあれば、後の括りはCompoだけでいい
+// QueryClientがRedux使うから、上
 export default MyApp
