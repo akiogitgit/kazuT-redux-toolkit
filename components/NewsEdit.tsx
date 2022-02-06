@@ -11,7 +11,7 @@ const NewsEdit: VFC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (news.id == 'create') {
+    if (news.id == '') {
       createNewsMutation.mutate(news.content)
     } else {
       updateNewsMutation.mutate({ id: news.id, content: news.content })
@@ -35,7 +35,7 @@ const NewsEdit: VFC = () => {
           onChange={(e) =>
             dispatch(
               setEditedNews({
-                id: news?.id ? news.id : 'create',
+                id: news?.id ? news.id : '',
                 content: e.target.value,
               })
             )
@@ -43,10 +43,10 @@ const NewsEdit: VFC = () => {
         />
         <button
           type="submit"
-          className="py-1 px-2 disabled:opacity-40 bg-gray-500 text-white"
-          disabled={news?.content == ''}
+          className="py-1 px-2 disabled:opacity-40 bg-gray-500 text-white rounded"
+          disabled={!news?.content}
         >
-          {news?.id && news?.id !== 'create' ? 'Update' : 'Create'}
+          {news?.id === '' ? 'Create' : 'Update'}
         </button>
       </form>
     </div>

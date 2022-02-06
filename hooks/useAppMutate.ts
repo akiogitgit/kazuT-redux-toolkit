@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux'
 import { fetchTasks } from './useQueryTasks'
 
 const cookie = new Cookie()
-const endpoint = process.env.NEXT_PUBLIC_HASURA_ENDPOINT
+const endpoint = <string>process.env.NEXT_PUBLIC_HASURA_ENDPOINT
 let graphQLClient: GraphQLClient
 
 // カスタムフック

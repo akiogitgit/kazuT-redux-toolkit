@@ -11,7 +11,7 @@ interface NewsRes {
 export const fetchNews = async () => {
   const { news: data } = await request<NewsRes>(
     // 'https://kazut-firebase.hasura.app/v1/graphql',
-    process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
+    <string>process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
     GET_NEWS
   ) // 第一にhasuraのエンドポイント、第二にクエリ
   return data
