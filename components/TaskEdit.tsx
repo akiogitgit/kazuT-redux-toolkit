@@ -2,8 +2,11 @@ import { FormEvent, memo, VFC } from 'react'
 import { useAppMutation } from '../hooks/useAppMutate'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectTask, setEditedTask } from '../slices/uiSlice'
+import { useSession } from 'next-auth/react'
 
 const TaskEdit: VFC = () => {
+  const { data: session } = useSession()
+
   const dispatch = useDispatch()
   const { createTaskMutation, updateTaskMutation } = useAppMutation()
 
@@ -12,12 +15,23 @@ const TaskEdit: VFC = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (task.id == '') {
-      createTaskMutation.mutate(task.title)
+      if (session) {
+        const taskUser = {
+          title: task.title,
+          user_id: String(session.user?.email),
+        }
+        createTaskMutation.mutate(taskUser)
+      } else {
+        const taskUser = {
+          title: task.title,
+          user_id: 'guest',
+        }
+        createTaskMutation.mutate(taskUser)
+      }
     } else {
       updateTaskMutation.mutate({ id: task.id, title: task.title })
     }
   }
-
   if (createTaskMutation.isLoading) return <p>Creating...</p>
   if (updateTaskMutation.isLoading) return <p>Updating...</p>
 

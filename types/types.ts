@@ -34,3 +34,8 @@ export interface EditTask {
   id: string
   title: string
 }
+
+export interface CreateTask {
+  title: string
+  user_id: string
+}

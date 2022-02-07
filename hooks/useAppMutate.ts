@@ -10,7 +10,7 @@ import {
   DELETE_NEWS,
   UPDATE_NEWS,
 } from '../queries/queries'
-import { Task, EditTask, News, EditNews } from '../types/types'
+import { Task, EditTask, CreateTask, News, EditNews } from '../types/types'
 import { resetEditedTask, resetEditedNews } from '../slices/uiSlice'
 import { useDispatch } from 'react-redux'
 import { useSession } from 'next-auth/react'
@@ -24,7 +24,7 @@ export const useAppMutation = () => {
   const dispatch = useDispatch()
   // createとかした後に、既存のキャッシュも変更する必要がある。
   const queryClient = useQueryClient()
-  // const { data: session } = useSession()
+  const { data: session } = useSession()
 
   // tokenが変更する度、graphQLClient生成
   useEffect(() => {
@@ -41,8 +41,8 @@ export const useAppMutation = () => {
 
   // taskを新規で作成する
   const createTaskMutation = useMutation(
-    //                                      第一にクエリ　　　　第二に引数
-    (title: string) => graphQLClient.request(CREATE_TASKS, { title: title }),
+    //     title,user_idが引数                   第一にクエリ　　第二に引数
+    (user: CreateTask) => graphQLClient.request(CREATE_TASKS, user),
     {
       // クエリ成功
       onSuccess: (res) => {
@@ -62,6 +62,9 @@ export const useAppMutation = () => {
       },
     }
   )
+  // const createtaskMutation2 = useMutation((title: string) =>
+  //   graphQLClient.request(CREATE_TASKS, { title: title })
+  // )
 
   // update task
   const updateTaskMutation = useMutation(
