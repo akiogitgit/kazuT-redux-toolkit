@@ -1,6 +1,4 @@
 import { memo, VFC } from 'react'
-import { useSelector } from 'react-redux'
-import { selectTask } from '../slices/uiSlice'
 import { useQueryTasks } from '../hooks/useQueryTasks'
 import { TaskItemMemo } from './TaskItem'
 import { TaskEditMemo } from './TaskEdit'

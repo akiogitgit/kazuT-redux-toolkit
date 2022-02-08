@@ -15,19 +15,11 @@ const TaskEdit: VFC = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (task.id == '') {
-      if (session) {
-        const taskUser = {
-          title: task.title,
-          user_id: String(session.user?.email),
-        }
-        createTaskMutation.mutate(taskUser)
-      } else {
-        const taskUser = {
-          title: task.title,
-          user_id: 'guest',
-        }
-        createTaskMutation.mutate(taskUser)
+      const taskUser = {
+        title: task.title,
+        user_id: session ? String(session.user?.email) : 'guest',
       }
+      createTaskMutation.mutate(taskUser)
     } else {
       updateTaskMutation.mutate({ id: task.id, title: task.title })
     }
@@ -35,6 +27,7 @@ const TaskEdit: VFC = () => {
   if (createTaskMutation.isLoading) return <p>Creating...</p>
   if (updateTaskMutation.isLoading) return <p>Updating...</p>
 
+  if (createTaskMutation.error || updateTaskMutation.error) return <p>Error</p>
   return (
     <div>
       {/* <p>news.id: {news?.id}</p> */}

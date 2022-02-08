@@ -10,10 +10,16 @@ import {
   DELETE_NEWS,
   UPDATE_NEWS,
 } from '../queries/queries'
-import { Task, EditTask, CreateTask, News, EditNews } from '../types/types'
+import {
+  Task,
+  EditTask,
+  CreateTask,
+  News,
+  EditNews,
+  CreateNews,
+} from '../types/types'
 import { resetEditedTask, resetEditedNews } from '../slices/uiSlice'
 import { useDispatch } from 'react-redux'
-import { useSession } from 'next-auth/react'
 
 const cookie = new Cookie()
 const endpoint = <string>process.env.NEXT_PUBLIC_HASURA_ENDPOINT
@@ -24,7 +30,6 @@ export const useAppMutation = () => {
   const dispatch = useDispatch()
   // createとかした後に、既存のキャッシュも変更する必要がある。
   const queryClient = useQueryClient()
-  const { data: session } = useSession()
 
   // tokenが変更する度、graphQLClient生成
   useEffect(() => {
@@ -60,6 +65,9 @@ export const useAppMutation = () => {
         // reduxのstateを初期化
         dispatch(resetEditedTask())
       },
+      onError: () => {
+        dispatch(resetEditedTask())
+      },
     }
   )
   // const createtaskMutation2 = useMutation((title: string) =>
@@ -85,6 +93,9 @@ export const useAppMutation = () => {
         }
         dispatch(resetEditedTask())
       },
+      onError: () => {
+        dispatch(resetEditedTask())
+      },
     }
   )
 
@@ -103,13 +114,15 @@ export const useAppMutation = () => {
         }
         dispatch(resetEditedTask())
       },
+      onError: () => {
+        dispatch(resetEditedTask())
+      },
     }
   )
 
   // create News
   const createNewsMutation = useMutation(
-    (content: string) =>
-      graphQLClient.request(CREATE_NEWS, { content: content }),
+    (news: CreateNews) => graphQLClient.request(CREATE_NEWS, news),
     {
       onSuccess: (res) => {
         const previousNews = queryClient.getQueryData<News[]>('news')
@@ -119,6 +132,9 @@ export const useAppMutation = () => {
             res.insert_news_one,
           ])
         }
+        dispatch(resetEditedNews())
+      },
+      onError: () => {
         dispatch(resetEditedNews())
       },
     }
@@ -139,6 +155,9 @@ export const useAppMutation = () => {
         }
         dispatch(resetEditedNews())
       },
+      onError: () => {
+        dispatch(resetEditedNews())
+      },
     }
   )
 
@@ -154,6 +173,9 @@ export const useAppMutation = () => {
             previousNews.filter((news) => news.id !== variables)
           )
         }
+        dispatch(resetEditedNews())
+      },
+      onError: () => {
         dispatch(resetEditedNews())
       },
     }

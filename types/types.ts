@@ -16,11 +16,17 @@ export interface News {
   id: string
   content: string
   created_at: string
+  user_id: string
 }
 
 export interface EditNews {
   id: string
   content: string
+}
+
+export interface CreateNews {
+  content: string
+  user_id: string
 }
 
 export interface Task {

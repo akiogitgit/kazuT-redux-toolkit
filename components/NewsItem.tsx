@@ -4,6 +4,7 @@ import { setEditedNews } from '../slices/uiSlice'
 import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid'
 import { useAppMutation } from '../hooks/useAppMutate'
 import { News } from '../types/types'
+import { useSession } from 'next-auth/react'
 
 interface Props {
   news: News
@@ -12,27 +13,34 @@ interface Props {
 const NewsItem: VFC<Props> = ({ news }) => {
   const dispatch = useDispatch()
   const { deleteNewsMutation } = useAppMutation()
+  const { data: session } = useSession()
 
   // delete中
   if (deleteNewsMutation.isLoading) {
     return <p>Deleting...</p>
   }
+  if (deleteNewsMutation.error) return <div>Error</div>
+
   return (
     <li className="my-3">
       <span className="font-bold">{news.content}</span>
-      <div className="flex float-right ml-20">
-        {/* この状態をreduxにセット、別のUPDATEをするファイルで扱う */}
-        <PencilAltIcon
-          className="h-5 w-5 mx-1 text-blue-500 cursor-pointer"
-          onClick={() =>
-            dispatch(setEditedNews({ id: news.id, content: news.content }))
-          }
-        />
-        {/* 削除 */}
-        <TrashIcon
-          className="h-5 w-5 text-blue-500 cursor-pointer"
-          onClick={() => deleteNewsMutation.mutate(news.id)}
-        />
+      <div className="float-right ml-20">
+        {session?.user?.email == news.user_id && (
+          <div className="flex">
+            {/* この状態をreduxにセット、別のUPDATEをするファイルで扱う */}
+            <PencilAltIcon
+              className="h-5 w-5 mx-1 text-blue-500 cursor-pointer"
+              onClick={() =>
+                dispatch(setEditedNews({ id: news.id, content: news.content }))
+              }
+            />
+            {/* 削除 */}
+            <TrashIcon
+              className="h-5 w-5 text-blue-500 cursor-pointer"
+              onClick={() => deleteNewsMutation.mutate(news.id)}
+            />
+          </div>
+        )}
       </div>
     </li>
   )

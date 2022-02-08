@@ -19,6 +19,7 @@ export const GET_ROCKETS = gql`
   }
 `
 
+// news
 export const GET_NEWS = gql`
   query GetNews {
     news {
@@ -28,13 +29,14 @@ export const GET_NEWS = gql`
     }
   }
 `
-// mutationだから、引数を変数にする !は、引数が必須の意
+
 export const CREATE_NEWS = gql`
-  mutation CreateNews($content: String!) {
-    insert_news_one(object: { content: $content }) {
+  mutation MyMutation($content: String!, $user_id: String!) {
+    insert_news_one(object: { content: $content, user_id: $user_id }) {
       id
       content
       created_at
+      user_id
     }
   }
 `
@@ -67,16 +69,16 @@ export const GET_TASKS = gql`
     }
   }
 `
-// export const CREATE_TASKS = gql`
-//   mutation CreateTasks($title: String!) {
-//     insert_tasks_one(object: { title: $title }) {
-//       id
-//       title
-//       created_at
-//       user_id
-//     }
-//   }
-// `
+export const GET_MY_TASKS = gql`
+  query GetMyTasks($user_id: String!) {
+    tasks(where: { user_id: { _eq: $user_id } }) {
+      id
+      title
+      created_at
+      user_id
+    }
+  }
+`
 export const CREATE_TASKS = gql`
   mutation CreateTasks($title: String!, $user_id: String!) {
     insert_tasks_one(object: { title: $title, user_id: $user_id }) {

@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import request, { GraphQLClient } from 'graphql-request'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import { Task } from '../types/types'
-import { GET_TASKS } from '../queries/queries'
+import { GET_MY_TASKS, GET_TASKS } from '../queries/queries'
 import Cookie from 'universal-cookie'
 
 interface TasksRes {
@@ -55,3 +55,32 @@ export const useQueryTasks = () => {
     staleTime: 0, // 追加のfetchを防ぐ
   })
 }
+
+// 自分のタスク
+// export const fetchMyTasks = async () => {
+//   const { tasks: data } = await request<TasksRes>(
+//     // 'https://kazut-firebase.hasura.app/v1/graphql',
+//     <string>process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
+//     GET_MY_TASKS
+//   ) // 第一にhasuraのエンドポイント、第二にクエ
+//   return data
+// }
+// // カスタムフック
+// export const useQueryMyTasks2 = () => {
+//   return useQuery<Task[], Error>({
+//     queryKey: 'myTasks',
+//     queryFn: fetchMyTasks,
+//     staleTime: 0, // 追加のfetchを防ぐ
+//     // cacheTime: 10000,
+//   })
+// }
+
+// export const useQueryMyTasks = () => {
+//   graphQLClient = new GraphQLClient(
+//     <string>process.env.NEXT_PUBLIC_HASURA_ENDPOINT
+//   )
+//   const useQueryMyTasks = useMutation((user_id: 'akimaron2828@icloud.com') =>
+//     graphQLClient.request(GET_MY_TASKS, { user_id: user_id })
+//   )
+//   return { useQueryMyTasks }
+// }

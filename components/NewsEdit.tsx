@@ -2,8 +2,10 @@ import { FormEvent, memo, VFC } from 'react'
 import { useAppMutation } from '../hooks/useAppMutate'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectNews, setEditedNews, resetEditedNews } from '../slices/uiSlice'
+import { useSession } from 'next-auth/react'
 
 const NewsEdit: VFC = () => {
+  const { data: session } = useSession()
   const dispatch = useDispatch()
   const { createNewsMutation, updateNewsMutation } = useAppMutation()
 
@@ -12,7 +14,11 @@ const NewsEdit: VFC = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (news.id == '') {
-      createNewsMutation.mutate(news.content)
+      const createNews = {
+        content: news.content,
+        user_id: session ? String(session.user?.email) : 'guest',
+      }
+      createNewsMutation.mutate(createNews)
     } else {
       updateNewsMutation.mutate({ id: news.id, content: news.content })
     }
@@ -20,6 +26,7 @@ const NewsEdit: VFC = () => {
 
   if (createNewsMutation.isLoading) return <p>Creating...</p>
   if (updateNewsMutation.isLoading) return <p>Updating...</p>
+  if (createNewsMutation.error || updateNewsMutation.error) return <p>Error</p>
 
   return (
     <div>
