@@ -3,8 +3,11 @@ import { AppProps } from 'next/app'
 import { useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
+import { Hydrate } from 'react-query'
+
 import { store } from '../app/store'
 import { Provider } from 'react-redux'
+
 import { SessionProvider } from 'next-auth/react'
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
@@ -25,9 +28,11 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
-        <Provider store={store}>
-          <Component {...pageProps} />
-        </Provider>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Provider store={store}>
+            <Component {...pageProps} />
+          </Provider>
+        </Hydrate>
         <ReactQueryDevtools />
       </QueryClientProvider>
     </SessionProvider>

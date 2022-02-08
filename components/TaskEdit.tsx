@@ -28,6 +28,7 @@ const TaskEdit: VFC = () => {
   if (updateTaskMutation.isLoading) return <p>Updating...</p>
 
   if (createTaskMutation.error || updateTaskMutation.error) return <p>Error</p>
+
   return (
     <div>
       {/* <p>news.id: {news?.id}</p> */}

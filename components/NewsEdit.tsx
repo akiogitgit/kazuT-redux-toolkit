@@ -8,19 +8,23 @@ const NewsEdit: VFC = () => {
   const { data: session } = useSession()
   const dispatch = useDispatch()
   const { createNewsMutation, updateNewsMutation } = useAppMutation()
-
   const news = useSelector(selectNews)
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (news.id == '') {
+      // 引数は２つでオブジェクト。
       const createNews = {
         content: news.content,
-        user_id: session ? String(session.user?.email) : 'guest',
+        user_id: session ? String(session.user?.name) : 'guest',
       }
       createNewsMutation.mutate(createNews)
     } else {
-      updateNewsMutation.mutate({ id: news.id, content: news.content })
+      updateNewsMutation.mutate({
+        id: news.id,
+        content: news.content,
+        // user_id: news.user_id,
+      })
     }
   }
 

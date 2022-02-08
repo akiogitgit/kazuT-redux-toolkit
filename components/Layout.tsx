@@ -10,7 +10,7 @@ interface Props {
 
 export const Layout: VFC<Props> = ({ children, title }) => {
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen text-gray-600 text-sm font-mono">
+    <div className="flex flex-col justify-center items-center min-h-screen text-gray-600 font-mono text-lg">
       <HEAD>
         <title>{title}</title>
       </HEAD>

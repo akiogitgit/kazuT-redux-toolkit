@@ -26,6 +26,7 @@ export const GET_NEWS = gql`
       id
       content
       created_at
+      user_id
     }
   }
 `
@@ -46,6 +47,7 @@ export const UPDATE_NEWS = gql`
       id
       content
       created_at
+      user_id
     }
   }
 `

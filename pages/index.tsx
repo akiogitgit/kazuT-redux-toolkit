@@ -1,31 +1,30 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import { ChevronDoubleRightIcon } from '@heroicons/react/solid'
-
 import { Layout } from '../components/Layout'
-import { useQueryRockets } from '../hooks/useQueryRockets'
-import { RocketItem } from '../components/Roketitem'
+
+import { GetStaticProps } from 'next'
+import { dehydrate } from 'react-query'
+import { fetchNews } from '../hooks/useQueryNews'
+import { News } from '../types/types'
+import { QueryClient, useQueryClient } from 'react-query'
 
 const Home: NextPage = () => {
-  // react-queryの標準でクエリの状態が分かる
-  const { status, data } = useQueryRockets()
-  // console.log(process.env.NEXT_PUBLIC_GITHUB_ID)
-  if (status === 'loading') return <Layout title="home">{'Loading...'}</Layout>
-  if (status === 'error') return <Layout title="home">{'Error'}</Layout>
-
+  const queryClient = useQueryClient()
+  // hydrateで注入されたデータを取得
+  const data = queryClient.getQueryData<News[]>('news')
   return (
     <Layout title="home">
-      <p className="my-5 text-blue-500 text-xl font-bold">
-        Fetching by useQuery
-      </p>
-      <ul>
-        {data?.map((rocket) => (
-          <RocketItem key={rocket.id} rocket={rocket} />
-        ))}
-      </ul>
+      <p className="my-5 text-blue-500 text-xl font-bold">News List by SSG</p>
+      {data?.map((news) => (
+        <p className="font-bold" key={news.id}>
+          {news.content}
+        </p>
+      ))}
 
-      <Link href="/read-cache" passHref>
+      <Link href="/Rocket" passHref>
         <div className="mt-10 flex items-center cursor-pointer">
+          Rocket
           <ChevronDoubleRightIcon className="h-5 w-5 mx-1 text-blue-500" />
         </div>
       </Link>
@@ -49,6 +48,18 @@ const Home: NextPage = () => {
       </Link>
     </Layout>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const queryClient = new QueryClient()
+  // Hasuraのnewsを取得してキャッシュに格納
+  await queryClient.prefetchQuery('news', fetchNews)
+  return {
+    props: {
+      // prefetchしたとき取得する
+      dehydrateState: dehydrate(queryClient),
+    },
+  }
 }
 
 export default Home

@@ -1,9 +1,6 @@
 import Link from 'next/link'
 import { useQueryClient } from 'react-query'
-import {
-  ChevronDoubleLeftIcon,
-  ChevronDoubleRightIcon,
-} from '@heroicons/react/solid'
+import { ChevronDoubleLeftIcon } from '@heroicons/react/solid'
 
 import { Layout } from '../components/Layout'
 import { Rocket } from '../types/types'
@@ -24,9 +21,10 @@ const ReadCache = () => {
         ))}
       </ul>
 
-      <Link href="/" passHref>
+      <Link href="/Rocket" passHref>
         <div className="mt-10 flex items-center cursor-pointer">
-          <ChevronDoubleRightIcon className="h-5 w-5 mx-1 text-blue-500" />
+          <ChevronDoubleLeftIcon className="h-5 w-5 mx-1 text-blue-500" />
+          Rocket
         </div>
       </Link>
     </Layout>

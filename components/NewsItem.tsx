@@ -25,7 +25,7 @@ const NewsItem: VFC<Props> = ({ news }) => {
     <li className="my-3">
       <span className="font-bold">{news.content}</span>
       <div className="float-right ml-20">
-        {session?.user?.email == news.user_id && (
+        {news.user_id == session?.user?.name && session ? (
           <div className="flex">
             {/* この状態をreduxにセット、別のUPDATEをするファイルで扱う */}
             <PencilAltIcon
@@ -40,6 +40,8 @@ const NewsItem: VFC<Props> = ({ news }) => {
               onClick={() => deleteNewsMutation.mutate(news.id)}
             />
           </div>
+        ) : (
+          <div className="text-[17px]">{news.user_id ?? 'Unknown'}</div>
         )}
       </div>
     </li>
